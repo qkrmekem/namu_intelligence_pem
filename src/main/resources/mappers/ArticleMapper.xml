@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.namu.article.persistence.ArticleMapper">
+
+    <select id="getArticleList" resultType="com.namu.article.domain.Article">
+        select * from article order by a_seq desc
+    </select>
+
+    <insert id="insertArticle" parameterType="com.namu.article.domain.Article">
+        insert into article(a_title, a_detail, a_count, a_dtime) values(#{a_title},#{a_detail},
+        #{a_count},sysdate())
+    </insert>
+
+    <select id="getArticle" resultType="com.namu.article.domain.Article">
+        select * from article where a_seq = #{a_seq}
+    </select>
+
+    <update id="updateArticle" parameterType="com.namu.article.domain.Article">
+        update article set a_title = #{a_title}, a_detail = #{a_detail} where a_seq = #{a_seq}
+    </update>
+
+    <delete id="deleteArticle" parameterType="int">
+        delete from article where a_seq = #{a_seq}
+    </delete>
+</mapper>

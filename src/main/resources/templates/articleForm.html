@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Article</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="/css/mystyle.css">
+
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Namu Intelligence</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Projects</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main>
+
+    <div class=" container">
+        <form action="/insertArticle" method="post">
+            <div class="row">
+                <div class="col-lg-12 text-left white-board">
+                    <div class="input-title-box">
+                        <input name="a_title" type="text" placeholder="여기에 제목을 입력하세요" class="input-title">
+                    </div>
+                    <div class="input-detail-box">
+                        <textarea id="summernote" name="a_detail"></textarea>
+                    </div>
+                    <div class="white-board-bottom">
+                        <button class="btn btn-success insert-btn btn-font-bigger">저장</button>
+                        <button class="btn btn-warning btn-font-bigger" type="button" th:onclick="|location.href='@{/resetInsert}'|">취소</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+
+<footer class="container-fluid text-center">
+    <p>Footer Text</p>
+</footer>
+
+<!-- 글쓰기 폼 java script -->
+<script src="/js/articleForm.js"></script>
+
+<!-- SummerNote -->
+<script src="/js/summernote-lite.js"></script>
+<script src="/js/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="/css/summernote-lite.css">
+
+<link  href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/lang/summernote-ko-KR.js"></script>
+
+</body>
+</html>
