@@ -11,7 +11,9 @@ public class Article {
     private int a_count;
     private String a_dtime;
 
-    private String a_file;
+    private String a_filename;
+
+    private String a_filepath;
 
     public void Article(){
         this.a_count=0;

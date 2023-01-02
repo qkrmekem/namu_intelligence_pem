@@ -50,6 +50,7 @@
                     </div>
                     <div class="input-detail-box">
                         <textarea id="summernote" name="a_detail">[[${article.a_detail}]]</textarea>
+                        <input name="" type="multipartFile" th:value="${article.a_filepath}">
                     </div>
                     <div class="white-board-bottom">
                         <button class="btn btn-success insert-btn btn-font-bigger" th:onclick="|location.href='@{/updateArticle/{a_seq}(a_seq=${article.a_seq})}'|">수정</button>

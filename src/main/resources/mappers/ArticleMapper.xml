@@ -4,13 +4,13 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.namu.article.persistence.ArticleMapper">
 
-    <select id="getArticleList" resultType="com.namu.article.domain.Article">
-        select * from article order by a_seq desc
+    <select id="getArticleList" parameterType="com.namu.article.domain.Paging" resultType="com.namu.article.domain.Article">
+        select * from article order by a_seq desc limit #{start_article}, #{page_per_article}
     </select>
 
     <insert id="insertArticle" parameterType="com.namu.article.domain.Article">
-        insert into article(a_title, a_detail, a_count, a_dtime) values(#{a_title},#{a_detail},
-        #{a_count},sysdate())
+        insert into article(a_title, a_detail, a_count, a_dtime, a_filename, a_filepath)
+        values(#{a_title},#{a_detail}, #{a_count}, sysdate(), #{a_filename}, #{a_filepath})
     </insert>
 
     <select id="getArticle" resultType="com.namu.article.domain.Article">
@@ -24,4 +24,8 @@
     <delete id="deleteArticle" parameterType="int">
         delete from article where a_seq = #{a_seq}
     </delete>
+
+    <select id="getTotalArticle" resultType="int">
+        select count(*) from article;
+    </select>
 </mapper>

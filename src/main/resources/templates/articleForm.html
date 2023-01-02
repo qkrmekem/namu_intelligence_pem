@@ -41,7 +41,7 @@
 <main>
 
     <div class=" container">
-        <form action="/insertArticle" method="post">
+        <form action="/insertArticle" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-lg-12 text-left white-board">
                     <div class="input-title-box">
@@ -49,6 +49,7 @@
                     </div>
                     <div class="input-detail-box">
                         <textarea id="summernote" name="a_detail"></textarea>
+                        <input type="file" multiple="multiple" name="multipartFile">
                     </div>
                     <div class="white-board-bottom">
                         <button class="btn btn-success insert-btn btn-font-bigger">저장</button>

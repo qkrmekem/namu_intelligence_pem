@@ -1,6 +1,7 @@
 package com.namu.article.repository;
 
 import com.namu.article.domain.Article;
+import com.namu.article.domain.Paging;
 import com.namu.article.persistence.ArticleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,8 +18,8 @@ public class ArticleRepository {
         articleMapper.insertArticle(article);
     }
 
-    public List<Article> getArticleList() {
-        List<Article> list = articleMapper.getArticleList();
+    public List<Article> getArticleList(Paging paging) {
+        List<Article> list = articleMapper.getArticleList(paging);
         return list;
     }
 
@@ -33,5 +34,10 @@ public class ArticleRepository {
 
     public void deleteArticle(int a_seq) {
         articleMapper.deleteArticle(a_seq);
+    }
+
+    public int getTotalArticle() {
+        int totalArticle = articleMapper.getTotalArticle();
+        return totalArticle;
     }
 }

@@ -2,16 +2,31 @@ package com.namu.article.contoller;
 
 import com.google.gson.JsonObject;
 import com.namu.article.domain.Article;
+import com.namu.article.domain.Paging;
 import com.namu.article.service.ArticleService;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -22,7 +37,21 @@ public class ArticleController {
 
     @RequestMapping
     public String main(Model model){
-        List<Article> list = articleService.getArticleList();
+        int total_article = articleService.getTotalArticle();
+        Paging paging = new Paging(1,total_article);
+        model.addAttribute(paging);
+        List<Article> list = articleService.getArticleList(paging);
+        model.addAttribute("articleList", list);
+        return "articleList";
+    }
+
+    @RequestMapping("/{page}")
+    public String main(Model model, @PathVariable int page){
+        int total_article = articleService.getTotalArticle();
+        Paging paging = new Paging(page,total_article);
+        model.addAttribute(paging);
+        System.out.println(paging);
+        List<Article> list = articleService.getArticleList(paging);
         model.addAttribute("articleList", list);
         return "articleList";
     }
@@ -47,9 +76,9 @@ public class ArticleController {
     }
 
     @RequestMapping("/insertArticle")
-    public String insertArticle(Article article){
+    public String insertArticle(Article article, MultipartFile multipartFile) throws Exception{
         System.out.println(article);
-        articleService.insertArticle(article);
+        articleService.insertArticle(article, multipartFile);
         System.out.println("입력완료!");
         return "redirect:/";
     }
@@ -69,9 +98,9 @@ public class ArticleController {
     }
 
     @RequestMapping("/updateArticle")
-    public String updateArticle(Article article){
+    public String updateArticle(Article article, MultipartFile multipartFile){
         System.out.println(article);
-        articleService.updateArticle(article);
+        articleService.updateArticle(article, multipartFile);
         return "redirect:/article/"+article.getA_seq();
     }
 
@@ -80,4 +109,31 @@ public class ArticleController {
         articleService.deleteArticle(a_seq);
         return "redirect:/";
     }
+
+    ResourceLoader resourceLoader;
+
+    @Autowired
+    public void FileController (ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
+
+
+    @GetMapping("/download/{filename}")
+    public void download(HttpServletResponse response, @PathVariable String filename) throws IOException {
+        System.out.println("여기까지 옴");
+//        String path = "C:/Users/superpil/OneDrive/바탕 화면/file/tistory.PNG";
+        String path = "C:/Users/10/Desktop/article/src/main/resources/static/files/"+filename;
+
+        byte[] fileByte = FileUtils.readFileToByteArray(new File(path));
+
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(filename, "UTF-8")+"\";");
+        response.setHeader("Content-Transfer-Encoding", "binary");
+
+        response.getOutputStream().write(fileByte);
+        response.getOutputStream().flush();
+        response.getOutputStream().close();
+    }
+
+
 }

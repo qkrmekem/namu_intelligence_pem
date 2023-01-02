@@ -2,6 +2,7 @@ package com.namu.article.service;
 
 import com.google.gson.JsonObject;
 import com.namu.article.domain.Article;
+import com.namu.article.domain.Paging;
 import com.namu.article.repository.ArticleRepository;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,12 +46,30 @@ public class ArticleService {
         return jsonObject;
     }
 
-    public void insertArticle(Article article) {
+    public void insertArticle(Article article, MultipartFile multipartFile) throws Exception {
+
+        //파일 저장 경로
+        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+        //파일 랜덤 이름 부여
+        UUID uuid = UUID.randomUUID();
+
+        String fileName = uuid + "_" + multipartFile.getOriginalFilename();
+
+        System.out.println(fileName);
+
+        File saveFile = new File(projectPath, fileName);
+
+        multipartFile.transferTo(saveFile);
+
+        article.setA_filename(fileName);
+        //static 밑에 있는 파일들은 static 아래의 경로만 적으면 접근 가능
+        article.setA_filepath("/files/"+fileName);
+
         articleRepository.insertArticle(article);
     }
 
-    public List<Article> getArticleList() {
-        List<Article> list = articleRepository.getArticleList();
+    public List<Article> getArticleList(Paging paging) {
+        List<Article> list = articleRepository.getArticleList(paging);
         return list;
     }
 
@@ -59,11 +78,16 @@ public class ArticleService {
         return article;
     }
 
-    public void updateArticle(Article article) {
+    public void updateArticle(Article article, MultipartFile multipartFile) {
         articleRepository.updateArticle(article);
     }
 
     public void deleteArticle(int a_seq) {
         articleRepository.deleteArticle(a_seq);
+    }
+
+    public int getTotalArticle() {
+        int totalArticle = articleRepository.getTotalArticle();
+        return totalArticle;
     }
 }
