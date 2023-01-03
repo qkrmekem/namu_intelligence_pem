@@ -2,6 +2,7 @@ package com.namu.article.service;
 
 import com.google.gson.JsonObject;
 import com.namu.article.domain.Article;
+import com.namu.article.domain.Comment;
 import com.namu.article.domain.Paging;
 import com.namu.article.repository.ArticleRepository;
 import org.apache.commons.io.FileUtils;
@@ -48,22 +49,27 @@ public class ArticleService {
 
     public void insertArticle(Article article, MultipartFile multipartFile) throws Exception {
 
-        //파일 저장 경로
-        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
-        //파일 랜덤 이름 부여
-        UUID uuid = UUID.randomUUID();
+        int ext = multipartFile.getOriginalFilename().indexOf(".");
+        //업로드 된 파일이 있는지 확인
+        if (ext>0){
+            //파일 저장 경로
+            String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+            //파일 랜덤 이름 부여
+            UUID uuid = UUID.randomUUID();
 
-        String fileName = uuid + "_" + multipartFile.getOriginalFilename();
+            String fileName = uuid + "_" + multipartFile.getOriginalFilename();
 
-        System.out.println(fileName);
+            String extension = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
 
-        File saveFile = new File(projectPath, fileName);
 
-        multipartFile.transferTo(saveFile);
+            File saveFile = new File(projectPath, fileName);
 
-        article.setA_filename(fileName);
-        //static 밑에 있는 파일들은 static 아래의 경로만 적으면 접근 가능
-        article.setA_filepath("/files/"+fileName);
+            multipartFile.transferTo(saveFile);
+
+            article.setA_filename(fileName);
+            //static 밑에 있는 파일들은 static 아래의 경로만 적으면 접근 가능
+            article.setA_filepath("/files/"+fileName);
+        }
 
         articleRepository.insertArticle(article);
     }
@@ -78,7 +84,28 @@ public class ArticleService {
         return article;
     }
 
-    public void updateArticle(Article article, MultipartFile multipartFile) {
+    public void updateArticle(Article article, MultipartFile multipartFile) throws Exception  {
+        int ext = multipartFile.getOriginalFilename().indexOf(".");
+        //업로드 된 파일이 있는지 확인
+        if (ext>0){
+            //파일 저장 경로
+            String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+            //파일 랜덤 이름 부여
+            UUID uuid = UUID.randomUUID();
+
+            String fileName = uuid + "_" + multipartFile.getOriginalFilename();
+
+            String extension = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
+
+
+            File saveFile = new File(projectPath, fileName);
+
+            multipartFile.transferTo(saveFile);
+
+            article.setA_filename(fileName);
+            //static 밑에 있는 파일들은 static 아래의 경로만 적으면 접근 가능
+            article.setA_filepath("/files/"+fileName);
+        }
         articleRepository.updateArticle(article);
     }
 
@@ -89,5 +116,10 @@ public class ArticleService {
     public int getTotalArticle() {
         int totalArticle = articleRepository.getTotalArticle();
         return totalArticle;
+    }
+
+    public List<Comment> getComments(int a_seq) {
+        List<Comment> list = articleRepository.getComments(a_seq);
+        return list;
     }
 }

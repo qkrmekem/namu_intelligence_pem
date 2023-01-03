@@ -28,4 +28,9 @@
     <select id="getTotalArticle" resultType="int">
         select count(*) from article;
     </select>
+
+    <select id="getComments" parameterType="int" resultType="com.namu.article.domain.Comment">
+        select * from t_comment where a_seq = #{a_seq} order by c_seq
+    </select>
+
 </mapper>

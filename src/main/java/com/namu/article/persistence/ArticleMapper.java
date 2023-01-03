@@ -1,6 +1,7 @@
 package com.namu.article.persistence;
 
 import com.namu.article.domain.Article;
+import com.namu.article.domain.Comment;
 import com.namu.article.domain.Paging;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -19,4 +20,6 @@ public interface ArticleMapper {
     public void deleteArticle(int a_seq);
 
     public int getTotalArticle();
+
+    public List<Comment> getComments(int a_seq);
 }

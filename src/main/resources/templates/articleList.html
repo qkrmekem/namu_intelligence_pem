@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Article</title>
     <meta charset="utf-8">
@@ -9,32 +9,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="/css/mystyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
+
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Namu Intelligence</a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Projects</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <th:block th:replace="fragments/header :: headerFragment"></th:block>
 </header>
 
 <main>
@@ -61,18 +42,28 @@
 
                 </div>
                 <div class="white-board-bottom">
-<!--                    <li class="page-item" th:if="${session.pageMaker.prev}"><a class="page-link" th:href="@{/noticeList(page=${session.pageMaker.startPage-1})}"><span class="ti-angle-left"></span></a></li>-->
-
-                    <th:block th:each="pageNum : ${#numbers.sequence(paging.start_page,paging.end_page)}">
-                        <li class="page-item active" th:if="${paging.page == pageNum}"><a class="page-link"  th:text="${pageNum}">01</a></li>
-                        <li class="page-item" th:if="${paging.page!=pageNum}"><a class="page-link" th:href="@{/{page}(page=${pageNum})}" th:text="${pageNum}">02</a></li>
-                    </th:block>
-
-                    <!-- 다음페이지 -->
-<!--                    <li class="page-item" th:if="${session.pageMaker.next}"><a class="page-link" th:href="@{/noticeList(page=${session.pageMaker.endPage+1})}"><span class="ti-angle-right"></span></a>-->
-<!--                    </li>-->
                     <button class="btn btn-success" th:onclick="|location.href='@{/articleForm}'|">글쓰기</button>
                 </div>
+                <div class="page-btn-box">
+                    <nav>
+                        <ul class="pagination">
+                            <li th:if="${paging.prev}">
+                                <a th:href="@{/{page}(page=${paging.page}-1)}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <th:block th:each="pageNum : ${#numbers.sequence(paging.start_page,paging.end_page)}">
+                                <li class="active" th:if="${paging.page == pageNum}"><a  th:text="${pageNum}">4</a></li>
+                                <li class="page-item" th:if="${paging.page!=pageNum}"><a th:href="@{/{page}(page=${pageNum})}" th:text="${pageNum}">5</a></li>
+                            </th:block>
+                            <li th:if="${paging.next}">
+                                <a th:href="@{/{page}(page=${paging.page}+1)}"  aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </diiv>
             </div>
         </div>
     </div>

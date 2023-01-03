@@ -1,6 +1,7 @@
 package com.namu.article.repository;
 
 import com.namu.article.domain.Article;
+import com.namu.article.domain.Comment;
 import com.namu.article.domain.Paging;
 import com.namu.article.persistence.ArticleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,10 @@ public class ArticleRepository {
     public int getTotalArticle() {
         int totalArticle = articleMapper.getTotalArticle();
         return totalArticle;
+    }
+
+    public List<Comment> getComments(int a_seq) {
+        List<Comment> list = articleMapper.getComments(a_seq);
+        return list;
     }
 }

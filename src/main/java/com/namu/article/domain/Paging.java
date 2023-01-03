@@ -13,6 +13,8 @@ public class Paging {
     private int end_page;
     private int start_article;
     private int end_article;
+    private boolean prev;
+    private boolean next;
 
 
     public Paging(int page, int total_article) {
@@ -43,5 +45,15 @@ public class Paging {
         }
         this.start_article = (page-1)*page_per_article;
         this.end_article = page*page_per_article > total_article? total_article : page*page_per_article;
+
+        this.prev=true;
+        this.next=true;
+
+        if(page==1){
+            this.prev=false;
+        }
+        if(page==end_page){
+            this.next=false;
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.namu.article.contoller;
 
 import com.google.gson.JsonObject;
 import com.namu.article.domain.Article;
+import com.namu.article.domain.Comment;
 import com.namu.article.domain.Paging;
 import com.namu.article.service.ArticleService;
 import org.apache.commons.io.FileUtils;
@@ -77,7 +78,7 @@ public class ArticleController {
 
     @RequestMapping("/insertArticle")
     public String insertArticle(Article article, MultipartFile multipartFile) throws Exception{
-        System.out.println(article);
+        System.out.println("멀티파트파일"+multipartFile);
         articleService.insertArticle(article, multipartFile);
         System.out.println("입력완료!");
         return "redirect:/";
@@ -98,7 +99,7 @@ public class ArticleController {
     }
 
     @RequestMapping("/updateArticle")
-    public String updateArticle(Article article, MultipartFile multipartFile){
+    public String updateArticle(Article article, MultipartFile multipartFile) throws Exception{
         System.out.println(article);
         articleService.updateArticle(article, multipartFile);
         return "redirect:/article/"+article.getA_seq();
@@ -109,13 +110,13 @@ public class ArticleController {
         articleService.deleteArticle(a_seq);
         return "redirect:/";
     }
-
-    ResourceLoader resourceLoader;
-
-    @Autowired
-    public void FileController (ResourceLoader resourceLoader) {
-        this.resourceLoader = resourceLoader;
-    }
+//
+//    ResourceLoader resourceLoader;
+//
+//    @Autowired
+//    public void FileController (ResourceLoader resourceLoader) {
+//        this.resourceLoader = resourceLoader;
+//    }
 
 
     @GetMapping("/download/{filename}")
@@ -135,5 +136,11 @@ public class ArticleController {
         response.getOutputStream().close();
     }
 
+    @RequestMapping("/getComments")
+    @ResponseBody
+    public  List<Comment> getComments(@RequestParam int a_seq, Model model){
+        List<Comment> list = articleService.getComments(a_seq);
+        return list;
+    }
 
 }
