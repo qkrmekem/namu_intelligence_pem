@@ -22,4 +22,8 @@ public interface ArticleMapper {
     public int getTotalArticle();
 
     public List<Comment> getComments(int a_seq);
+
+    public void deleteComments(int c_seq);
+
+    public void insertComments(Comment comment);
 }

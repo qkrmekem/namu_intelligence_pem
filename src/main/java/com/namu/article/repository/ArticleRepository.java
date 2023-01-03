@@ -46,4 +46,12 @@ public class ArticleRepository {
         List<Comment> list = articleMapper.getComments(a_seq);
         return list;
     }
+
+    public void deleteComments(int c_seq) {
+        articleMapper.deleteComments(c_seq);
+    }
+
+    public void insertComments(Comment comment) {
+        articleMapper.insertComments(comment);
+    }
 }

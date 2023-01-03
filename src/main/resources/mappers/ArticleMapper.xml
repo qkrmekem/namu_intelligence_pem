@@ -30,7 +30,15 @@
     </select>
 
     <select id="getComments" parameterType="int" resultType="com.namu.article.domain.Comment">
-        select * from t_comment where a_seq = #{a_seq} order by c_seq
+        select * from t_comment where a_seq = #{a_seq} order by c_seq desc
     </select>
+
+    <delete id="deleteComments" parameterType="int">
+        delete from t_comment where c_seq = #{c_seq}
+    </delete>
+
+    <insert id="insertComments" parameterType="com.namu.article.domain.Comment">
+        insert into t_comment(a_seq, c_detail, c_dtime) values (#{a_seq}, #{c_detail}, now())
+    </insert>
 
 </mapper>

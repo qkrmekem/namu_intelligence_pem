@@ -36,20 +36,26 @@
                     </div>
                     <div class="white-board-bottom">
                         <input type="hidden" th:value="${article.a_seq}" id="article_seq">
-                        <button class="btn btn-primary insert-btn btn-font-bigger" id="btn_comments">댓글</button>
+                        <button class="btn btn-success insert-btn btn-font-bigger" id="btn_comments">댓글</button>
                         <button class="btn btn-primary insert-btn btn-font-bigger" th:onclick="|location.href='@{/updateArticleForm/{a_seq}(a_seq=${article.a_seq})}'|">수정</button>
                         <button class="btn btn-warning btn-font-bigger" type="button" th:onclick="|location.href='@{/deleteArticle/{a_seq}(a_seq=${article.a_seq})}'|">삭제</button>
                     </div>
-                    <div class="panel panel-default comment-box">
-                        <div class="panel-heading">
-                            Panel Heading
-                            <button id="btn_comment_delete">×</button>
+                    <form id="comment_form">
+                        <input type="hidden" th:value="${article.a_seq}" name="a_seq">
+                        <div class="panel panel-default comment-box">
+                            <div class="panel-heading">
+                                Your Comment
+                            </div>
+                            <div class="panel-body">
+                                <input type="text" id="input_comment" placeholder="여기에 댓글을 작성하세요" name="c_detail" class="input-comment for-middle">
+                                <button type="button" id="btn_comment_insert" class="to-left btn btn-success">작성</button>
+                            </div>
                         </div>
-                        <div class="panel-body">Panel Content</div>
-                    </div>
-                    <div id="result_comments">
+                    </form>
 
-                    </div>
+                        <div id="result_comments">
+
+                        </div>
                 </div>
             </div>
         </div>
@@ -74,6 +80,39 @@
 <link  href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/lang/summernote-ko-KR.js"></script>
+
+
+<script>
+<!--댓글 가져오기 기능은 article.js파일에-->
+<!--댓글 작성 기능-->
+
+<!-- 댓글 삭제 기능 -->
+    function deleteComments(c_seq,a_seq){
+            $.ajax({
+                url:"/deleteComments",
+                type:"post",
+                data:{"c_seq":c_seq,"a_seq":a_seq},
+                dataType : "json",
+                success: commentsReload,
+                error : function(e){console.log(e);}
+            });
+        }
+<!--댓글 삭제 성공 시에 댓글 리스트를 다시 불러옴-->
+    function commentsReload(data){
+        console.log("commentsReload 실행");
+        var html = "<div class='panel panel-default comment-box'>";
+        html += "<div class='panel-heading'>Comments</div>";
+        for(i=0; i<data.length; i++){
+            console.log(data[i].c_detail);
+            html+= "<div class='panel-body'>"+data[i].c_detail;
+            html+= "<button type='button' id='btn_comment_delete' class='to-left' onclick='deleteComments("+data[i].c_seq+","+data[i].a_seq+")'>×</button>";
+            html+= "</div>";
+        }
+        html+="</div>";
+        $("#result_comments").html(html);
+    }
+
+</script>
 
 </body>
 </html>

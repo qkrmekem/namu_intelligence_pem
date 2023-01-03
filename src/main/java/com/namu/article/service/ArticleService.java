@@ -122,4 +122,12 @@ public class ArticleService {
         List<Comment> list = articleRepository.getComments(a_seq);
         return list;
     }
+
+    public void deleteComments(int c_seq) {
+        articleRepository.deleteComments(c_seq);
+    }
+
+    public void insertComments(Comment comment) {
+        articleRepository.insertComments(comment);
+    }
 }
