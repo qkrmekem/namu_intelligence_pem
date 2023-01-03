@@ -71,6 +71,7 @@ public class ArticleController {
 
     @RequestMapping("/article/{a_seq}")
     public String article(@PathVariable int a_seq, Model model){
+        articleService.updateArticleCount(a_seq);
         Article article = articleService.getArticle(a_seq);
         model.addAttribute("article", article);
         return "article";

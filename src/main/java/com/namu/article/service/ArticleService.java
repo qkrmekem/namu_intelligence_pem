@@ -130,4 +130,8 @@ public class ArticleService {
     public void insertComments(Comment comment) {
         articleRepository.insertComments(comment);
     }
+
+    public void updateArticleCount(int a_seq) {
+        articleRepository.updateArticleCount(a_seq);
+    }
 }

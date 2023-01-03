@@ -26,4 +26,6 @@ public interface ArticleMapper {
     public void deleteComments(int c_seq);
 
     public void insertComments(Comment comment);
+
+    public void updateArticleCount(int a_seq);
 }

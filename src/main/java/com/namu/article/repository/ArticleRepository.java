@@ -54,4 +54,8 @@ public class ArticleRepository {
     public void insertComments(Comment comment) {
         articleMapper.insertComments(comment);
     }
+
+    public void updateArticleCount(int a_seq) {
+        articleMapper.updateArticleCount(a_seq);
+    }
 }

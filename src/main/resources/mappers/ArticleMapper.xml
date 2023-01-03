@@ -41,4 +41,8 @@
         insert into t_comment(a_seq, c_detail, c_dtime) values (#{a_seq}, #{c_detail}, now())
     </insert>
 
+    <update id="updateArticleCount" parameterType="int">
+        update article set a_count = a_count + 1 where a_seq = ${a_seq}
+    </update>
+
 </mapper>

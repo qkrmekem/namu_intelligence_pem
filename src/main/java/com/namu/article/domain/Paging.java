@@ -19,7 +19,7 @@ public class Paging {
 
     public Paging(int page, int total_article) {
         super();
-        this.page_per_article = 10;
+        this.page_per_article = 15;
         this.page = page;
         this.total_article = total_article;
         this.total_page_count = total_article/page_per_article;

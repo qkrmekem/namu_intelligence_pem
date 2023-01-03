@@ -38,7 +38,8 @@
                         <input type="hidden" th:value="${article.a_seq}" id="article_seq">
                         <button class="btn btn-success insert-btn btn-font-bigger" id="btn_comments">댓글</button>
                         <button class="btn btn-primary insert-btn btn-font-bigger" th:onclick="|location.href='@{/updateArticleForm/{a_seq}(a_seq=${article.a_seq})}'|">수정</button>
-                        <button class="btn btn-warning btn-font-bigger" type="button" th:onclick="|location.href='@{/deleteArticle/{a_seq}(a_seq=${article.a_seq})}'|">삭제</button>
+                        <button class="btn btn-warning insert-btn btn-font-bigger" type="button" th:onclick="|location.href='@{/deleteArticle/{a_seq}(a_seq=${article.a_seq})}'|">삭제</button>
+                        <button class="btn btn-font-bigger" type="button" th:onclick="|location.href='@{/}'|">목록</button>
                     </div>
                     <form id="comment_form">
                         <input type="hidden" th:value="${article.a_seq}" name="a_seq">
