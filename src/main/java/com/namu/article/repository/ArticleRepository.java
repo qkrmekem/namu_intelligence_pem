@@ -58,4 +58,8 @@ public class ArticleRepository {
     public void updateArticleCount(int a_seq) {
         articleMapper.updateArticleCount(a_seq);
     }
+
+    public void deleteFile(int a_seq) {
+        articleMapper.deleteFile(a_seq);
+    }
 }

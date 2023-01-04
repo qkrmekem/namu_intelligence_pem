@@ -147,4 +147,10 @@ public class ArticleController {
         List<Comment> list = articleService.getComments(comment.getA_seq());
         return list;
     }
+
+    //업로드 된 파일 삭제 메서드
+    @RequestMapping("/deleteFile/{a_seq}")
+    public void deleteFile(@PathVariable int a_seq){
+        articleService.deleteFile(a_seq);
+    }
 }

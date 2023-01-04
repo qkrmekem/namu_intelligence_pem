@@ -134,4 +134,8 @@ public class ArticleService {
     public void updateArticleCount(int a_seq) {
         articleRepository.updateArticleCount(a_seq);
     }
+
+    public void deleteFile(int a_seq) {
+        articleRepository.deleteFile(a_seq);
+    }
 }

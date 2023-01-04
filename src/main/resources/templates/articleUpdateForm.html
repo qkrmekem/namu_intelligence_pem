@@ -33,7 +33,7 @@
                         <div class="box-flex">
                             <input name="multipartFile" type="file" multiple="multiple">
                             <a class="for-middle" th:if="${not #strings.isEmpty(article.a_filename)}" th:href="@{/download/{filename}(filename=${article.a_filename})}">기존 파일</a>
-                            <button type="button" onclick="">×</button>
+                            <button type="button" th:onclick="|location.href='@{/deleteFile/{a_seq}(a_seq=${article.a_seq})}'|">×</button>
                         </div>
                     </div>
                     <div class="white-board-bottom">

@@ -18,7 +18,9 @@
     </select>
 
     <update id="updateArticle" parameterType="com.namu.article.domain.Article">
-        update article set a_title = #{a_title}, a_detail = #{a_detail} where a_seq = #{a_seq}
+        update article set a_title = #{a_title}, a_detail = #{a_detail}
+        <if test="a_filename != null">, a_filename = #{a_filename}, a_filepath = #{a_filepath}</if>
+        where a_seq = #{a_seq}
     </update>
 
     <delete id="deleteArticle" parameterType="int">
@@ -43,6 +45,10 @@
 
     <update id="updateArticleCount" parameterType="int">
         update article set a_count = a_count + 1 where a_seq = ${a_seq}
+    </update>
+
+    <update id="deleteFile" parameterType="int">
+        update article set a_filename = '', a_filepath = ''
     </update>
 
 </mapper>
