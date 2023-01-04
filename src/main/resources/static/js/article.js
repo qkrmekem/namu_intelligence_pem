@@ -52,5 +52,19 @@ $(document).ready(function() {
         $("#result_comments").html(html);
     }
 
+    $("#btn_delete_file").on("click",function(){
+        console.log("삭제 버튼 클릭");
+        var a_seq = $("#a_seq").val();
+        $.ajax({
+            url : "/deleteFile",
+            type : "get",
+            data : {"a_seq":a_seq},
+            success : resultDeleteFile,
+            error : function(e){console.log(e);}
+        });
+    })
 
+    function resultDeleteFile(){
+        $("#existing_file").html("");
+    }
 });

@@ -25,15 +25,17 @@
             <div class="row">
                 <div class="col-lg-12 text-left white-board">
                     <div class="input-title-box">
-                        <input name="a_seq" th:value="${article.a_seq}" type="hidden">
+                        <input name="a_seq" th:value="${article.a_seq}" type="hidden" id="a_seq">
                         <input name="a_title" th:value="${article.a_title}" type="text" placeholder="여기에 제목을 입력하세요" class="input-title">
                     </div>
                     <div class="input-detail-box">
                         <textarea id="summernote" name="a_detail">[[${article.a_detail}]]</textarea>
                         <div class="box-flex">
                             <input name="multipartFile" type="file" multiple="multiple">
-                            <a class="for-middle" th:if="${not #strings.isEmpty(article.a_filename)}" th:href="@{/download/{filename}(filename=${article.a_filename})}">기존 파일</a>
-                            <button type="button" th:onclick="|location.href='@{/deleteFile/{a_seq}(a_seq=${article.a_seq})}'|">×</button>
+                            <div id="existing_file">
+                                <a class="for-middle" th:if="${not #strings.isEmpty(article.a_filename)}" th:href="@{/download/{filename}(filename=${article.a_filename})}">기존 파일</a>
+                                <button th:if="${not #strings.isEmpty(article.a_filename)}" type="button" id="btn_delete_file" >×</button>
+                            </div>
                         </div>
                     </div>
                     <div class="white-board-bottom">
@@ -53,6 +55,9 @@
 
 <!-- 글쓰기 폼 java script -->
 <script src="/js/articleForm.js"></script>
+
+<!--게시글 관련 java script-->
+<script src="/js/article.js"></script>
 
 <!-- SummerNote -->
 <script src="/js/summernote-lite.js"></script>

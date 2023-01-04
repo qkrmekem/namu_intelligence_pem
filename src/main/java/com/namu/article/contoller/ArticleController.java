@@ -148,9 +148,11 @@ public class ArticleController {
         return list;
     }
 
-    //업로드 된 파일 삭제 메서드
-    @RequestMapping("/deleteFile/{a_seq}")
-    public void deleteFile(@PathVariable int a_seq){
+    //업로드 된 파일 삭제 메서드(비동기)
+    @RequestMapping("/deleteFile")
+    @ResponseBody
+    public void deleteFile(@RequestParam int a_seq){
+        System.out.println("deleteFile 실행 "+a_seq);
         articleService.deleteFile(a_seq);
     }
 }
