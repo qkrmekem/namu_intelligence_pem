@@ -27,7 +27,8 @@ public class ArticleController {
     // 페이지 정보를 넘겨 받지 않았을 때 띄울 메인페이지
     @RequestMapping
     public String main(Model model){
-        int total_article = articleService.getTotalArticle();
+        String search=null;
+        int total_article = articleService.getTotalArticle(search);
         Paging paging = new Paging(1,total_article);
         model.addAttribute(paging);
         List<Article> list = articleService.getArticleList(paging);
@@ -37,11 +38,15 @@ public class ArticleController {
 
     // 페이지 정보를 넘겨 받았을 때 띄울 메인페이지
     @RequestMapping("/{page}")
-    public String main(Model model, @PathVariable int page){
-        int total_article = articleService.getTotalArticle();
+    public String main(Model model, @PathVariable int page,@RequestParam String search){
+        System.out.println("search : "+search);
+        int total_article = articleService.getTotalArticle(search);
+        System.out.println("total_article : " + total_article);
         Paging paging = new Paging(page,total_article);
+        paging.setSearch(search);
         model.addAttribute(paging);
         List<Article> list = articleService.getArticleList(paging);
+        System.out.println("list : " + list.size());
         model.addAttribute("articleList", list);
         return "articleList";
     }

@@ -16,6 +16,7 @@ public class Paging {
     private boolean prev;
     private boolean next;
 
+    private String search;
 
     public Paging(int page, int total_article) {
         super();

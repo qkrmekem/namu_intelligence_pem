@@ -113,8 +113,8 @@ public class ArticleService {
         articleRepository.deleteArticle(a_seq);
     }
 
-    public int getTotalArticle() {
-        int totalArticle = articleRepository.getTotalArticle();
+    public int getTotalArticle(String search) {
+        int totalArticle = articleRepository.getTotalArticle(search);
         return totalArticle;
     }
 

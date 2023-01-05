@@ -37,8 +37,8 @@ public class ArticleRepository {
         articleMapper.deleteArticle(a_seq);
     }
 
-    public int getTotalArticle() {
-        int totalArticle = articleMapper.getTotalArticle();
+    public int getTotalArticle(String search) {
+        int totalArticle = articleMapper.getTotalArticle(search);
         return totalArticle;
     }
 

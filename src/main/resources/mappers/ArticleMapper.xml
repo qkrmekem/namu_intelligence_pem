@@ -5,7 +5,9 @@
 <mapper namespace="com.namu.article.persistence.ArticleMapper">
 
     <select id="getArticleList" parameterType="com.namu.article.domain.Paging" resultType="com.namu.article.domain.Article">
-        select * from article order by a_seq desc limit #{start_article}, #{page_per_article}
+        select * from article
+        <if test="search != null"> where a_title like CONCAT('%',#{search},'%') </if>
+        order by a_seq desc limit #{start_article}, #{page_per_article}
     </select>
 
     <insert id="insertArticle" parameterType="com.namu.article.domain.Article">
@@ -27,8 +29,11 @@
         delete from article where a_seq = #{a_seq}
     </delete>
 
-    <select id="getTotalArticle" resultType="int">
-        select count(*) from article;
+    <select id="getTotalArticle" parameterType="String" resultType="int">
+        select count(*) from article
+        <if test="search != null">
+            where a_title like CONCAT('%',#{search},'%')
+        </if>
     </select>
 
     <select id="getComments" parameterType="int" resultType="com.namu.article.domain.Comment">

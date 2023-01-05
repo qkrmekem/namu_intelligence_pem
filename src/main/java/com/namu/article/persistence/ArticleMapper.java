@@ -19,7 +19,7 @@ public interface ArticleMapper {
 
     public void deleteArticle(int a_seq);
 
-    public int getTotalArticle();
+    public int getTotalArticle(String search);
 
     public List<Comment> getComments(int a_seq);
 
